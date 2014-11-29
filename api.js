@@ -1,6 +1,9 @@
 var request = require('request');
 
-var scrapers = [require('./scrapers/twitter')];
+var scrapers = [
+	require('./scrapers/twitter'),
+	require('./scrapers/facebook')
+];
 
 module.exports = {
 	/**
@@ -13,24 +16,35 @@ module.exports = {
 	*/
 	searchUser: function (config, callback) {
 		var result = [];
-		for (var idx in scrapers) {
-			var scraper = scrapers[idx];
-			console.log("Fetching " + scraper.base_url(config.name));
-			request(scraper.base_url(config.name), function (error, res, chunk) {
+		var idx = 0;
+		var addData = function(data) {
+			result.push(data);
+			idx ++;
+			if (idx < scrapers.length) {
+				scraper_request(scrapers[idx]);
+			} else {
+				callback(JSON.stringify(result));
+			}
+		};
+
+		var scraper_request = function(curr_scraper) {
+			console.log("Fetching " + curr_scraper.base_url(config.name));
+			request(curr_scraper.base_url(config.name), function (error, res, chunk) {
+				var data = {};
 				if (!error && res.statusCode == 200) {
-					var data = scraper.parse(chunk, config.name);
-					if (typeof callback == 'function') {
-						result.push(data);
-					}
+					data = curr_scraper.parse(chunk, config.name);
 				} else {
-					var data = {};
-					data[scraper.network] = 'no user found';
-					result.push(data);
+					data[curr_scraper.network] = 'no user found';
 				}
-				if (result.length == scrapers.length) {
-					callback(JSON.stringify(result));
-				}
+				addData(data);
 			});
-		}
+		};
+
+		scraper_request(scrapers[0]);
+
+
+
+
+
 	}
 };
