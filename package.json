@@ -1,0 +1,34 @@
+{
+  "author": {
+    "name": "alecdotico",
+    "email": "altapas@gmail.com",
+    "url": ""
+  },
+  "name": "social-find-API",
+  "description": "Finder of usernames and data in social networks",
+  "keywords": [
+    "Twitter",
+    "facebook",
+    "api",
+    "scraper",
+    "metadata",
+    "usernames"
+  ],
+  "version": "0.1.0",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/alecdotico/social-find-JSAPI.git"
+  },
+  "license" : "MIT",
+  "main": "./index.js",
+  "engines": {
+    "node": ">= 0.6"
+  },
+  "dependencies": {
+    "util": "0.x",
+    "express": "3.x",
+    "request": "2.x",
+    "logfmt": "0.x",
+    "cheerio": "0.x"
+  }
+}
