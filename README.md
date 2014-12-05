@@ -1,6 +1,6 @@
 Social username finder Javascript API
 ================
-Finds in social networks a specific username
+Quick and Dirty scrapper that finds in social networks a specific username.
 
 
 Why?
